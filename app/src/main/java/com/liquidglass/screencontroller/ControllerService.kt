@@ -6,9 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Path
 import android.os.Bundle
+import android.os.Environment
 import android.view.accessibility.AccessibilityEvent
+import java.io.File
 
 class ControllerService : AccessibilityService() {
+    private val SCREEN_DIR = File(Environment.getExternalStorageDirectory(), "ScreenController")
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
     override fun onInterrupt() {}
 
@@ -31,6 +35,18 @@ class ControllerService : AccessibilityService() {
         val stroke = GestureDescription.StrokeDescription(path, 0, duration)
         val gesture = GestureDescription.Builder().addStroke(stroke).build()
         dispatchGesture(gesture, null, null)
+    }
+
+    fun screenshot(): Boolean {
+        return try {
+            SCREEN_DIR.mkdirs()
+            val out = File(SCREEN_DIR, "screen.png")
+            val proc = Runtime.getRuntime().exec("screencap -p ${out.absolutePath}")
+            proc.waitFor(5, java.util.concurrent.TimeUnit.SECONDS)
+            out.exists()
+        } catch (e: Exception) {
+            false
+        }
     }
 
     companion object {

@@ -11,7 +11,12 @@ class CommandReceiver : BroadcastReceiver() {
         when (action) {
             "tap" -> svc.tap(intent.getIntExtra("x", 0), intent.getIntExtra("y", 0))
             "longpress" -> svc.longPress(intent.getIntExtra("x", 0), intent.getIntExtra("y", 0), intent.getLongExtra("duration", 800))
-            "swipe" -> svc.swipe(intent.getIntExtra("x", 0), intent.getIntExtra("y", 0), intent.getIntExtra("x2", 0), intent.getIntExtra("y2", 0), intent.getLongExtra("duration", 300))
+            "swipe" -> svc.swipe(
+                intent.getIntExtra("x", 0), intent.getIntExtra("y", 0),
+                intent.getIntExtra("x2", 0), intent.getIntExtra("y2", 0),
+                intent.getLongExtra("duration", 300)
+            )
+            "screenshot" -> svc.screenshot()
         }
     }
 }
