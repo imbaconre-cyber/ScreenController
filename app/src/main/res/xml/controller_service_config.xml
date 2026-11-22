@@ -2,4 +2,4 @@
     android:accessibilityEventTypes="typeAllMask"
     android:accessibilityFlags="flagDefault"
     android:canPerformGestures="true"
-    android:description="Screen controller" />
+    android:description="@string/app_name" />
